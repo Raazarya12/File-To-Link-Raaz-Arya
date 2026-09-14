@@ -134,6 +134,7 @@ async def start(b, m):
 @StreamBot.on_message(filters.command('help') & filters.private)
 async def help_handler(bot, message):
     try:
+    try:
     if not await db.is_user_exist(m.from_user.id):
         await db.add_user(m.from_user.id)
 
@@ -143,11 +144,12 @@ async def help_handler(bot, message):
                 f"#NEW_USER: \n\nNew User [{m.from_user.first_name}](tg://user?id={m.from_user.id}) Started !!"
             )
         except Exception as e:
-            logger.error(f"BIN_CHANNEL error: {e}")
+            logger.error(f"BIN_CHANNEL ERROR: {e}")
 
 except Exception as e:
-    logger.error(f"Database error: {e}")
-        )
+    logger.error(f"DATABASE ERROR: {e}")
+            )
+        
     if Var.UPDATES_CHANNEL is not None:
         try:
             user = await bot.get_chat_member(Var.UPDATES_CHANNEL, message.chat.id)
