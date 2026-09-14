@@ -82,7 +82,7 @@ async def force_sub(bot, message):
                     [
                         InlineKeyboardButton(
                             "ᴊᴏɪɴ ᴍʏ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ",
-                            url="https://t.me/MWUpdatez"
+                            url="https://t.me/Latest_Movies_FreeOnNet"
                         )
                     ]
                 ]
@@ -143,7 +143,7 @@ async def start(bot, message):
                     [
                         InlineKeyboardButton(
                             "⚡ ᴜᴘᴅᴀᴛᴇᴢ ⚡",
-                            url="https://t.me/MWUpdatez"
+                            url="https://t.me/Latest_Movies_FreeOnNet"
                         ),
                         InlineKeyboardButton(
                             "⚡ sᴜᴘᴘᴏʀᴛ ⚡",
