@@ -45,36 +45,54 @@ async def login_handler(c: Client, m: Message):
     except Exception as e:
         print(e)
 
-@StreamBot.on_message((filters.private) & (filters.document | filters.video | filters.audio | filters.photo) , group=4)
+@StreamBot.on_message(
+    (filters.private) &
+    (filters.document | filters.video | filters.audio | filters.photo),
+    group=4
+)
 async def private_receive_handler(c: Client, m: Message):
+
     if MY_PASS:
         check_pass = await pass_db.get_user_pass(m.chat.id)
-        if check_pass== None:
-            await m.reply_text("Login first using /login cmd \nDon't know the password contact @ArjunVR_AVR")
+
+        if check_pass == None:
+            await m.reply_text(
+                "Login first using /login cmd\n"
+                "Don't know the password contact @ArjunVR_AVR"
+            )
             return
+
         if check_pass != MY_PASS:
             await pass_db.delete_user(m.chat.id)
             return
+
+    # DATABASE
     try:
-    if not await db.is_user_exist(m.from_user.id):
-        await db.add_user(m.from_user.id)
+        if not await db.is_user_exist(m.from_user.id):
+            await db.add_user(m.from_user.id)
 
-        try:
-            await c.send_message(
-                Var.BIN_CHANNEL,
-                f"Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ :\n\n"
-                f"Nᴀᴍᴇ : [{m.from_user.first_name}]"
-                f"(tg://user?id={m.from_user.id}) "
-                f"Sᴛᴀʀᴛᴇᴅ Yᴏᴜʀ Bᴏᴛ !!"
-            )
-        except Exception as e:
-            print(f"BIN CHANNEL ERROR: {e}")
+            try:
+                await c.send_message(
+                    Var.BIN_CHANNEL,
+                    f"Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ :\n\n"
+                    f"Nᴀᴍᴇ : [{m.from_user.first_name}]"
+                    f"(tg://user?id={m.from_user.id}) "
+                    f"Sᴛᴀʀᴛᴇᴅ Yᴏᴜʀ Bᴏᴛ !!"
+                )
 
-except Exception as e:
-    print(f"DATABASE ERROR: {e}")
+            except Exception as e:
+                print(f"BIN CHANNEL ERROR: {e}")
+
+    except Exception as e:
+        print(f"DATABASE ERROR: {e}")
+
+    # FORCE SUB
     if Var.UPDATES_CHANNEL != "None":
         try:
-            user = await c.get_chat_member(Var.UPDATES_CHANNEL, m.chat.id)
+            user = await c.get_chat_member(
+                Var.UPDATES_CHANNEL,
+                m.chat.id
+            )
             if user.status == "kicked":
                 await c.send_message(
                     chat_id=m.chat.id,
