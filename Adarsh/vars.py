@@ -9,9 +9,9 @@ load_dotenv()
 
 class Var(object):
     MULTI_CLIENT = False
-    API_ID = int(getenv('API_ID'))
-    API_HASH = str(getenv('API_HASH'))
-    BOT_TOKEN = str(getenv('BOT_TOKEN'))
+    API_ID = int(getenv('20932503'))
+    API_HASH = str(getenv('4742289cfae50c92d8de04b4daae2c64'))
+    BOT_TOKEN = str(getenv('8841717091:AAGeCwWIpWf1kkzE4MQObbxR6PAH02LkItA'))
     name = str(getenv('SESSION_NAME', 'filetolinkbot'))
     SLEEP_THRESHOLD = int(getenv('SLEEP_THRESHOLD', '60'))
     WORKERS = int(getenv('WORKERS', '4'))
@@ -19,7 +19,7 @@ class Var(object):
     PORT = int(getenv('PORT', 8080))
     BIND_ADRESS = str(getenv('WEB_SERVER_BIND_ADDRESS', '0.0.0.0'))
     PING_INTERVAL = int(environ.get("PING_INTERVAL", "1200"))  # 20 minutes
-    OWNER_ID = set(int(x) for x in os.environ.get("OWNER_ID", "").split())  
+    OWNER_ID = set(int(x) for x in os.environ.get("8199400850", "").split())  
     NO_PORT = bool(getenv('NO_PORT', False))
     APP_NAME = None
     OWNER_USERNAME = str(getenv('OWNER_USERNAME'))
@@ -35,6 +35,6 @@ class Var(object):
         URL = "https://{}/".format(FQDN)
     else:
         URL = "http://{}/".format(FQDN)
-    DATABASE_URL = str(getenv('DATABASE_URL'))
-    UPDATES_CHANNEL = str(getenv('UPDATES_CHANNEL', None))
+    DATABASE_URL = str(getenv('DATABASE_URL=mongodb+srv://monsterrise99:oIgNirG5XP7nA27B@cluster0.bevuwul.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'))
+    UPDATES_CHANNEL = str(getenv('UPDATES_CHANNEL', -1001430858047)
     BANNED_CHANNELS = list(set(int(x) for x in str(getenv("BANNED_CHANNELS", "-1001362659779")).split())) 
