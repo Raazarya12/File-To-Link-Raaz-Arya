@@ -343,7 +343,7 @@ async def about_handler(bot, message):
 <b>╭━━━━━━━〔ғɪʟᴇ ᴛᴏ ʟɪɴᴋ ʙᴏᴛ〕</b>
 ┃
 ┣⪼ <b>ʙᴏᴛ ɴᴀᴍᴇ : <a href='https://github.com/Aadhi000/File-To-Link'>ғɪʟᴇ ᴛᴏ ʟɪɴᴋ</a></b>
-┣⪼ <b>ᴜᴘᴅᴀᴛᴇᴢ : <a href='https://t.me/MWUpdatez'>ᴍᴡ ᴜᴘᴅᴀᴛᴇᴢ</a></b>
+┣⪼ <b>ᴜᴘᴅᴀᴛᴇᴢ : <a href='https://t.me/Latest_Movies_FreeOnNet'>ᴍᴡ ᴜᴘᴅᴀᴛᴇᴢ</a></b>
 ┣⪼ <b>sᴜᴘᴘᴏʀᴛ : <a href='https://t.me/OpusTechz'>ᴏᴘᴜs ᴛᴇᴄʜᴢ</a></b>
 ┣⪼ <b>sᴇʀᴠᴇʀ : ʜᴇʀᴜᴋᴏ / ᴋᴏʏᴇʙ</b>
 ┣⪼ <b>ʟɪʙʀᴀʀʏ : ᴘʏʀᴏɢʀᴀᴍ</b>
