@@ -87,7 +87,7 @@ async def private_receive_handler(c: Client, m: Message):
         print(f"DATABASE ERROR: {e}")
 
     # FORCE SUB
-    if Var.UPDATES_CHANNEL != "None":
+    if Var.UPDATES_CHANNEL:
         try:
             user = await c.get_chat_member(
                 Var.UPDATES_CHANNEL,
