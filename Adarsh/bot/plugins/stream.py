@@ -55,12 +55,23 @@ async def private_receive_handler(c: Client, m: Message):
         if check_pass != MY_PASS:
             await pass_db.delete_user(m.chat.id)
             return
+    try:
     if not await db.is_user_exist(m.from_user.id):
         await db.add_user(m.from_user.id)
-        await c.send_message(
-            Var.BIN_CHANNEL,
-            f"Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ : \n\n Nᴀᴍᴇ : [{m.from_user.first_name}](tg://user?id={m.from_user.id}) Sᴛᴀʀᴛᴇᴅ Yᴏᴜʀ Bᴏᴛ !!"
-        )
+
+        try:
+            await c.send_message(
+                Var.BIN_CHANNEL,
+                f"Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ :\n\n"
+                f"Nᴀᴍᴇ : [{m.from_user.first_name}]"
+                f"(tg://user?id={m.from_user.id}) "
+                f"Sᴛᴀʀᴛᴇᴅ Yᴏᴜʀ Bᴏᴛ !!"
+            )
+        except Exception as e:
+            print(f"BIN CHANNEL ERROR: {e}")
+
+except Exception as e:
+    print(f"DATABASE ERROR: {e}")
     if Var.UPDATES_CHANNEL != "None":
         try:
             user = await c.get_chat_member(Var.UPDATES_CHANNEL, m.chat.id)
