@@ -1,9 +1,10 @@
-# Taken from megadlbot_oss <https://github.com/eyaadh/megadlbot_oss/blob/master/mega/webserver/routes.py>
-# Thanks to Eyaadh <https://github.com/eyaadh>
+# Taken from megadlbot_oss
+# https://github.com/eyaadh/megadlbot_oss/blob/master/mega/webserver/routes.py
 
 import re
 import time
 import math
+import asyncio
 import logging
 import secrets
 import mimetypes
@@ -95,14 +96,10 @@ async def watch_handler(request: web.Request):
         )
 
     except InvalidHash as e:
-        raise web.HTTPForbidden(
-            text=e.message
-        )
+        raise web.HTTPForbidden(text=e.message)
 
     except FIleNotFound as e:
-        raise web.HTTPNotFound(
-            text=e.message
-        )
+        raise web.HTTPNotFound(text=e.message)
 
     except (
         AttributeError,
@@ -112,17 +109,12 @@ async def watch_handler(request: web.Request):
         pass
 
     except Exception as e:
-        logging.exception(
-            "Watch route error"
-        )
-
-        raise web.HTTPInternalServerError(
-            text=str(e)
-        )
+        logging.exception("Watch route error")
+        raise web.HTTPInternalServerError(text=str(e))
 
 
 # ============================================================
-# DOWNLOAD / MEDIA
+# MEDIA / DOWNLOAD / STREAM
 # ============================================================
 
 @routes.get(r"/{path:\S+}", allow_head=True)
@@ -161,14 +153,10 @@ async def media_route_handler(request: web.Request):
         )
 
     except InvalidHash as e:
-        raise web.HTTPForbidden(
-            text=e.message
-        )
+        raise web.HTTPForbidden(text=e.message)
 
     except FIleNotFound as e:
-        raise web.HTTPNotFound(
-            text=e.message
-        )
+        raise web.HTTPNotFound(text=e.message)
 
     except (
         AttributeError,
@@ -178,13 +166,8 @@ async def media_route_handler(request: web.Request):
         pass
 
     except Exception as e:
-        logging.exception(
-            "Media route error"
-        )
-
-        raise web.HTTPInternalServerError(
-            text=str(e)
-        )
+        logging.exception("Media route error")
+        raise web.HTTPInternalServerError(text=str(e))
 
 
 # ============================================================
@@ -205,7 +188,7 @@ async def media_streamer(
 ):
 
     # --------------------------------------------------------
-    # Select fastest Telegram client
+    # Select fastest client
     # --------------------------------------------------------
 
     index = min(
@@ -228,15 +211,7 @@ async def media_streamer(
 
         tg_connect = class_cache[faster_client]
 
-        logging.debug(
-            f"Using cached ByteStreamer for client {index}"
-        )
-
     else:
-
-        logging.debug(
-            f"Creating ByteStreamer for client {index}"
-        )
 
         tg_connect = ByteStreamer(
             faster_client
@@ -245,19 +220,11 @@ async def media_streamer(
         class_cache[faster_client] = tg_connect
 
     # --------------------------------------------------------
-    # Get Telegram file properties
+    # File properties
     # --------------------------------------------------------
-
-    logging.debug(
-        "Getting file properties..."
-    )
 
     file_data = await tg_connect.get_file_properties(
         id
-    )
-
-    logging.debug(
-        "File properties received"
     )
 
     # --------------------------------------------------------
@@ -265,11 +232,6 @@ async def media_streamer(
     # --------------------------------------------------------
 
     if file_data.unique_id[:6] != secure_hash:
-
-        logging.debug(
-            f"Invalid hash for message ID {id}"
-        )
-
         raise InvalidHash
 
     file_size = file_data.file_size
@@ -278,7 +240,7 @@ async def media_streamer(
         raise FIleNotFound
 
     # --------------------------------------------------------
-    # Range handling
+    # RANGE
     # --------------------------------------------------------
 
     range_header = request.headers.get("Range")
@@ -286,9 +248,6 @@ async def media_streamer(
     if range_header:
 
         try:
-
-            # Example:
-            # bytes=0-1023
 
             range_value = range_header.replace(
                 "bytes=",
@@ -301,11 +260,14 @@ async def media_streamer(
                 1
             )
 
+            # bytes=500-
             if start_str:
+
                 from_bytes = int(start_str)
+
+            # bytes=-500
             else:
-                # Suffix range:
-                # bytes=-500
+
                 suffix_length = int(end_str)
 
                 if suffix_length <= 0:
@@ -317,8 +279,11 @@ async def media_streamer(
                 )
 
             if end_str:
+
                 until_bytes = int(end_str)
+
             else:
+
                 until_bytes = file_size - 1
 
         except (
@@ -333,8 +298,6 @@ async def media_streamer(
                         f"bytes */{file_size}"
                 }
             )
-
-        # Prevent invalid ranges
 
         if (
             from_bytes < 0
@@ -361,12 +324,10 @@ async def media_streamer(
 
         from_bytes = 0
         until_bytes = file_size - 1
-
         status_code = 200
 
     # --------------------------------------------------------
-    # IMPORTANT:
-    # Range length is inclusive
+    # IMPORTANT
     # --------------------------------------------------------
 
     req_length = (
@@ -376,7 +337,7 @@ async def media_streamer(
     )
 
     # --------------------------------------------------------
-    # Telegram chunk size
+    # Chunk calculation
     # --------------------------------------------------------
 
     new_chunk_size = await chunk_size(
@@ -404,7 +365,7 @@ async def media_streamer(
     )
 
     # --------------------------------------------------------
-    # Generate file stream
+    # Telegram async generator
     # --------------------------------------------------------
 
     body = tg_connect.yield_file(
@@ -418,7 +379,7 @@ async def media_streamer(
     )
 
     # --------------------------------------------------------
-    # MIME type
+    # MIME
     # --------------------------------------------------------
 
     mime_type = file_data.mime_type
@@ -442,10 +403,7 @@ async def media_streamer(
     if not file_name:
 
         extension = (
-            mime_type.split(
-                "/",
-                1
-            )[1]
+            mime_type.split("/", 1)[1]
             if "/" in mime_type
             else "bin"
         )
@@ -457,11 +415,6 @@ async def media_streamer(
 
     # --------------------------------------------------------
     # WATCH vs DOWNLOAD
-    #
-    # WATCH player adds:
-    # ?stream=1
-    #
-    # DOWNLOAD does not.
     # --------------------------------------------------------
 
     is_stream = (
@@ -479,23 +432,19 @@ async def media_streamer(
         disposition = "attachment"
 
     # --------------------------------------------------------
-    # Response headers
+    # HEADERS
     # --------------------------------------------------------
 
     headers = {
-
-        "Content-Type":
-            mime_type,
+        "Content-Type": mime_type,
 
         "Content-Disposition":
             f'{disposition}; filename="{file_name}"',
 
-        "Accept-Ranges":
-            "bytes",
+        "Accept-Ranges": "bytes",
 
         "Content-Length":
             str(req_length),
-
     }
 
     if status_code == 206:
@@ -508,11 +457,40 @@ async def media_streamer(
         )
 
     # --------------------------------------------------------
-    # Final response
+    # REAL STREAMING RESPONSE
     # --------------------------------------------------------
 
-    return web.Response(
+    response = web.StreamResponse(
         status=status_code,
-        body=body,
         headers=headers
     )
+
+    await response.prepare(request)
+
+    try:
+
+        async for chunk in body:
+
+            if chunk:
+
+                await response.write(
+                    chunk
+                )
+
+    except (
+        ConnectionResetError,
+        asyncio.CancelledError
+    ):
+
+        logging.info(
+            "Client disconnected while streaming"
+        )
+
+    finally:
+
+        try:
+            await response.write_eof()
+        except Exception:
+            pass
+
+    return response
