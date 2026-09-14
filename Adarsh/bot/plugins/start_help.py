@@ -295,7 +295,7 @@ async def help_handler(bot, message):
                 [
                     InlineKeyboardButton(
                         "⚡ ᴜᴘᴅᴀᴛᴇᴢ ⚡",
-                        url="https://t.me/MWUpdatez"
+                        url="https://t.me/Latest_movies_FreeOnNet"
                     ),
                     InlineKeyboardButton(
                         "⚡ sᴜᴘᴘᴏʀᴛ ⚡",
