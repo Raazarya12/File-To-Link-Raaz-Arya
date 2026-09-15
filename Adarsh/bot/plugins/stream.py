@@ -697,4 +697,160 @@ async def channel_receive_handler(
                 "Wrong password, login again"
             )
 
-           
+            try:
+
+                await pass_db.delete_user(
+                    broadcast.chat.id
+                )
+
+            except Exception as e:
+
+                print(
+                    f"PASSWORD DELETE ERROR: {e}"
+                )
+
+            return
+
+    # =====================================================
+    # BANNED CHANNEL
+    # =====================================================
+
+    if int(broadcast.chat.id) in Var.BANNED_CHANNELS:
+
+        await bot.leave_chat(
+            broadcast.chat.id
+        )
+
+        return
+
+    # =====================================================
+    # GENERATE CHANNEL LINK
+    # =====================================================
+
+    try:
+
+        log_msg = await broadcast.forward(
+            chat_id=Var.BIN_CHANNEL
+        )
+
+        file_hash = get_hash(
+            log_msg
+        )
+
+        file_name = get_name(
+            log_msg
+        )
+
+        encoded_name = quote_plus(
+            file_name
+        )
+
+        stream_link = (
+            f"{Var.URL}"
+            f"watch/"
+            f"{str(log_msg.id)}/"
+            f"{encoded_name}"
+            f"?hash={file_hash}"
+        )
+
+        online_link = (
+            f"{Var.URL}"
+            f"{str(log_msg.id)}/"
+            f"{encoded_name}"
+            f"?hash={file_hash}"
+        )
+
+        # -------------------------------------------------
+        # BIN CHANNEL LOG
+        # -------------------------------------------------
+
+        await log_msg.reply_text(
+
+            text=(
+                f"**Cʜᴀɴɴᴇʟ Nᴀᴍᴇ:** "
+                f"`{broadcast.chat.title}`\n"
+                f"**Cʜᴀɴɴᴇʟ ID:** "
+                f"`{broadcast.chat.id}`\n"
+                f"**Rᴇǫᴜᴇsᴛ ᴜʀʟ:** "
+                f"{stream_link}"
+            ),
+
+            quote=True
+        )
+
+        # -------------------------------------------------
+        # EDIT ORIGINAL CHANNEL MESSAGE
+        # -------------------------------------------------
+
+        await bot.edit_message_reply_markup(
+
+            chat_id=broadcast.chat.id,
+
+            id=broadcast.id,
+
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            "⚡ ᴡᴀᴛᴄʜ ⚡",
+                            url=stream_link
+                        ),
+
+                        InlineKeyboardButton(
+                            "⚡ ᴅᴏᴡɴʟᴏᴀᴅ ⚡",
+                            url=online_link
+                        )
+                    ]
+                ]
+            )
+        )
+
+    # =====================================================
+    # FLOOD WAIT
+    # =====================================================
+
+    except FloodWait as w:
+
+        print(
+            f"Sleeping for {str(w.x)}s"
+        )
+
+        await asyncio.sleep(
+            w.x
+        )
+
+        await bot.send_message(
+
+            chat_id=Var.BIN_CHANNEL,
+
+            text=(
+                f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ "
+                f"{str(w.x)}s from "
+                f"{broadcast.chat.title}\n\n"
+                f"**Cʜᴀɴɴᴇʟ ID:** "
+                f"`{str(broadcast.chat.id)}`"
+            ),
+
+            disable_web_page_preview=True
+        )
+
+    except Exception as e:
+
+        await bot.send_message(
+
+            chat_id=Var.BIN_CHANNEL,
+
+            text=(
+                f"**#ᴇʀʀᴏʀ_ᴛʀᴀᴄᴇʙᴀᴄᴋ:** "
+                f"`{e}`"
+            ),
+
+            disable_web_page_preview=True
+        )
+
+        print(
+            "Cᴀɴ'ᴛ Eᴅɪᴛ Bʀᴏᴀᴅᴄᴀsᴛ Mᴇssᴀɢᴇ!\n"
+            f"Eʀʀᴏʀ: "
+            f"Give me edit permission in updates "
+            f"and bin Channel {e}"
+        )
