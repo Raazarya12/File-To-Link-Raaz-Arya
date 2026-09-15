@@ -413,19 +413,28 @@ async def media_streamer(
             f"{extension}"
         )
 
-    # --------------------------------------------------------
+    # ========================================================
     # STREAM / DOWNLOAD
-    # --------------------------------------------------------
+    # ========================================================
     #
-    # IMPORTANT:
-    # Keep Content-Disposition INLINE.
+    # WATCH URL contains:
+    # ?hash=XXXXXX&stream=1
     #
-    # This allows the browser/player to stream the media.
-    # It also preserves the previous working behavior where
-    # both generated URLs were streamable.
-    # --------------------------------------------------------
+    # DOWNLOAD URL contains:
+    # ?hash=XXXXXX
+    #
+    # WATCH  -> inline
+    # DOWNLOAD -> attachment
+    # ========================================================
 
-    disposition = "inline"
+    is_stream = request.rel_url.query.get("stream") == "1"
+
+    if is_stream:
+        # WATCH → Stream / Play in browser
+        disposition = "inline"
+    else:
+        # DOWNLOAD → Force direct download
+        disposition = "attachment"
 
     # --------------------------------------------------------
     # HEADERS
