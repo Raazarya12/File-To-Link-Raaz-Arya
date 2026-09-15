@@ -531,7 +531,7 @@ async def private_receive_handler(
 <b>♻️ ᴛʜɪs ʟɪɴᴋ ɪs ᴘᴇʀᴍᴀɴᴇɴᴛ
 ᴀɴᴅ ᴡᴏɴ'ᴛ ɢᴇᴛs ᴇxᴘɪʀᴇᴅ ♻️
 
-❖ YouTube.com/Latest_movies_freeOnnet</b>
+❖ YouTube.com/@latest_movies_freeonnet</b>
 """
 
         # -------------------------------------------------
