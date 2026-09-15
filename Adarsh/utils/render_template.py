@@ -28,9 +28,11 @@ async def render_page(id, secure_hash):
 
     # WATCH / STREAM URL
     src = urllib.parse.urljoin(
-        Var.URL,
-        f'{secure_hash}{str(id)}?hash={secure_hash}&stream=1'
-    )
+    Var.URL,
+    f'{secure_hash}{str(id)}?hash={secure_hash}&stream=1'
+)
+
+logging.warning(f"STREAM SRC => {src}")
 
     # VIDEO
     if str(file_data.mime_type.split('/')[0].strip()) == 'video':
