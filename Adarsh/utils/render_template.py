@@ -11,6 +11,7 @@ import aiohttp
 
 
 async def render_page(id, secure_hash):
+
     file_data = await get_file_ids(
         StreamBot,
         int(Var.BIN_CHANNEL),
@@ -21,18 +22,22 @@ async def render_page(id, secure_hash):
         logging.debug(
             f'link hash: {secure_hash} - {file_data.unique_id[:6]}'
         )
+
         logging.debug(
             f"Invalid hash for message with - ID {id}"
         )
+
         raise InvalidHash
 
     # WATCH / STREAM URL
     src = urllib.parse.urljoin(
-    Var.URL,
-    f'{secure_hash}{str(id)}?hash={secure_hash}&stream=1'
-)
+        Var.URL,
+        f'{secure_hash}{str(id)}?hash={secure_hash}&stream=1'
+    )
 
-logging.warning(f"STREAM SRC => {src}")
+    logging.warning(
+        f"STREAM SRC => {src}"
+    )
 
     # VIDEO
     if str(file_data.mime_type.split('/')[0].strip()) == 'video':
@@ -85,7 +90,6 @@ logging.warning(f"STREAM SRC => {src}")
     # OTHER FILES = DOWNLOAD
     else:
 
-        # Normal download URL
         download_src = urllib.parse.urljoin(
             Var.URL,
             f'{secure_hash}{str(id)}?hash={secure_hash}'
@@ -110,10 +114,13 @@ logging.warning(f"STREAM SRC => {src}")
                     )
 
                     if content_length:
+
                         file_size = humanbytes(
                             int(content_length)
                         )
+
                     else:
+
                         file_size = humanbytes(
                             int(file_data.file_size)
                         )
