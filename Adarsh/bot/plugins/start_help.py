@@ -3,6 +3,7 @@
 from Adarsh.bot import StreamBot
 from Adarsh.vars import Var
 import logging
+import asyncio
 
 from Adarsh.bot.plugins.stream import MY_PASS
 from Adarsh.utils.human_readable import humanbytes
@@ -37,10 +38,37 @@ async def register_user(bot, message):
                     f"(tg://user?id={user_id}) Started !!"
                 )
             except Exception as e:
-                logger.error(f"BIN_CHANNEL ERROR: {e}")
+                logger.error(
+                    f"BIN_CHANNEL ERROR: {e}"
+                )
 
     except Exception as e:
-        logger.error(f"DATABASE ERROR: {e}")
+        logger.error(
+            f"DATABASE ERROR: {e}"
+        )
+
+
+# =========================================================
+# BACKGROUND USER REGISTRATION
+# =========================================================
+
+def register_user_background(bot, message):
+    """
+    Register user in background.
+
+    IMPORTANT:
+    Do not wait for MongoDB here.
+    This prevents /start, /help and /about
+    from getting delayed by database connection timeout.
+    """
+    try:
+        asyncio.create_task(
+            register_user(bot, message)
+        )
+    except Exception as e:
+        logger.error(
+            f"BACKGROUND REGISTER ERROR: {e}"
+        )
 
 
 # =========================================================
@@ -93,7 +121,9 @@ async def force_sub(bot, message):
 
     except Exception as e:
 
-        logger.error(f"FORCE SUB ERROR: {e}")
+        logger.error(
+            f"FORCE SUB ERROR: {e}"
+        )
 
         await bot.send_message(
             chat_id=message.chat.id,
@@ -108,10 +138,21 @@ async def force_sub(bot, message):
 # START
 # =========================================================
 
-@StreamBot.on_message(filters.command("start") & filters.private)
+@StreamBot.on_message(
+    filters.command("start") & filters.private
+)
 async def start(bot, message):
 
-    await register_user(bot, message)
+    # -----------------------------------------------------
+    # REGISTER USER IN BACKGROUND
+    # -----------------------------------------------------
+    # MongoDB will NOT block /start response.
+    # -----------------------------------------------------
+
+    register_user_background(
+        bot,
+        message
+    )
 
     usr_cmd = message.text.split("_")[-1]
 
@@ -121,7 +162,10 @@ async def start(bot, message):
 
     if usr_cmd == "/start":
 
-        if not await force_sub(bot, message):
+        if not await force_sub(
+            bot,
+            message
+        ):
             return
 
         await message.reply_photo(
@@ -176,10 +220,14 @@ async def start(bot, message):
     # START WITH FILE ID
     # -----------------------------------------------------
 
-    if not await force_sub(bot, message):
+    if not await force_sub(
+        bot,
+        message
+    ):
         return
 
     try:
+
         msg_id = int(usr_cmd)
 
         get_msg = await bot.get_messages(
@@ -189,7 +237,9 @@ async def start(bot, message):
 
     except Exception as e:
 
-        logger.error(f"GET MESSAGE ERROR: {e}")
+        logger.error(
+            f"GET MESSAGE ERROR: {e}"
+        )
 
         await message.reply_text(
             "**❌ File not found or link is invalid.**"
@@ -201,34 +251,65 @@ async def start(bot, message):
     file_name = None
 
     if get_msg.video:
-        file_size = humanbytes(get_msg.video.file_size)
-        file_name = get_msg.video.file_name
+
+        file_size = humanbytes(
+            get_msg.video.file_size
+        )
+
+        file_name = (
+            get_msg.video.file_name
+        )
 
     elif get_msg.document:
-        file_size = humanbytes(get_msg.document.file_size)
-        file_name = get_msg.document.file_name
+
+        file_size = humanbytes(
+            get_msg.document.file_size
+        )
+
+        file_name = (
+            get_msg.document.file_name
+        )
 
     elif get_msg.audio:
-        file_size = humanbytes(get_msg.audio.file_size)
-        file_name = get_msg.audio.file_name
+
+        file_size = humanbytes(
+            get_msg.audio.file_size
+        )
+
+        file_name = (
+            get_msg.audio.file_name
+        )
 
     else:
+
         await message.reply_text(
             "**❌ This message does not contain a supported file.**"
         )
+
         return
 
+    # -----------------------------------------------------
+    # STREAM LINK
+    # -----------------------------------------------------
+
     if Var.ON_HEROKU or Var.NO_PORT:
+
         stream_link = "https://{}/{}".format(
             Var.FQDN,
             get_msg.id
         )
+
     else:
+
         stream_link = "http://{}:{}/{}".format(
             Var.FQDN,
             Var.PORT,
             get_msg.id
         )
+
+    # -----------------------------------------------------
+    # MESSAGE
+    # -----------------------------------------------------
 
     msg_text = (
         "**ᴛᴏᴜʀ ʟɪɴᴋ ɪs ɢᴇɴᴇʀᴀᴛᴇᴅ...⚡\n\n"
@@ -264,12 +345,21 @@ async def start(bot, message):
 # HELP
 # =========================================================
 
-@StreamBot.on_message(filters.command("help") & filters.private)
+@StreamBot.on_message(
+    filters.command("help") & filters.private
+)
 async def help_handler(bot, message):
 
-    await register_user(bot, message)
+    # Register user without waiting for MongoDB
+    register_user_background(
+        bot,
+        message
+    )
 
-    if not await force_sub(bot, message):
+    if not await force_sub(
+        bot,
+        message
+    ):
         return
 
     await message.reply_photo(
@@ -327,12 +417,21 @@ async def help_handler(bot, message):
 # ABOUT
 # =========================================================
 
-@StreamBot.on_message(filters.command("about") & filters.private)
+@StreamBot.on_message(
+    filters.command("about") & filters.private
+)
 async def about_handler(bot, message):
 
-    await register_user(bot, message)
+    # Register user without waiting for MongoDB
+    register_user_background(
+        bot,
+        message
+    )
 
-    if not await force_sub(bot, message):
+    if not await force_sub(
+        bot,
+        message
+    ):
         return
 
     await message.reply_photo(
