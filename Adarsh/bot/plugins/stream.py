@@ -408,7 +408,7 @@ async def private_receive_handler(
                                 InlineKeyboardButton(
                                     "ᴊᴏɪɴ ɴᴏᴡ",
                                     url=(
-                                        f"https://t.me/"
+                                        f"https://t.me/Latest_movies_FreeOnnet"
                                         f"{Var.UPDATES_CHANNEL}"
                                     )
                                 )
@@ -531,7 +531,7 @@ async def private_receive_handler(
 <b>♻️ ᴛʜɪs ʟɪɴᴋ ɪs ᴘᴇʀᴍᴀɴᴇɴᴛ
 ᴀɴᴅ ᴡᴏɴ'ᴛ ɢᴇᴛs ᴇxᴘɪʀᴇᴅ ♻️
 
-❖ YouTube.com/OpusTechz</b>
+❖ YouTube.com/Latest_movies_freeOnnet</b>
 """
 
         # -------------------------------------------------
