@@ -191,13 +191,13 @@ async def start(bot, message):
                         ),
                         InlineKeyboardButton(
                             "⚡ sᴜᴘᴘᴏʀᴛ ⚡",
-                            url="https://t.me/OpusTechz"
+                            url="https://t.me/mix_cinema_Box"
                         )
                     ],
                     [
                         InlineKeyboardButton(
                             "💸 ᴅᴏɴᴀᴛᴇ 💸",
-                            url="https://paypal.me/114912Aadil"
+                            url="https://t.me/Finding_Movies"
                         ),
                         InlineKeyboardButton(
                             "💠 ɢɪᴛʜᴜʙ 💠",
@@ -207,7 +207,7 @@ async def start(bot, message):
                     [
                         InlineKeyboardButton(
                             "💌 sᴜʙsᴄʀɪʙᴇ 💌",
-                            url="https://youtube.com/opustechz"
+                            url="https://youtube.com/Latest_Movies_FreeOnNet"
                         )
                     ]
                 ]
@@ -318,7 +318,7 @@ async def start(bot, message):
         "💌 ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :- {}\n\n"
         "♻️ ᴛʜɪs ʟɪɴᴋ ɪs ᴘᴇʀᴍᴀɴᴇɴᴛ "
         "ᴀɴᴅ ᴡᴏɴ'ᴛ ɢᴇᴛ ᴇxᴘɪʀᴇᴅ ♻️\n\n"
-        "<b>❖ YouTube.com/OpusTechz</b>**"
+        "<b>❖ YouTube.com/Latest_Movies_FreeOnNet</b>**"
     )
 
     await message.reply_text(
@@ -389,13 +389,13 @@ async def help_handler(bot, message):
                     ),
                     InlineKeyboardButton(
                         "⚡ sᴜᴘᴘᴏʀᴛ ⚡",
-                        url="https://t.me/OpusTechz"
+                        url="https://t.me/mix_cinema_Box"
                     )
                 ],
                 [
                     InlineKeyboardButton(
                         "💸 ᴅᴏɴᴀᴛᴇ 💸",
-                        url="https://paypal.me/114912Aadil"
+                        url="https://t.me/Finding_Movies"
                     ),
                     InlineKeyboardButton(
                         "💠 ɢɪᴛʜᴜʙ 💠",
@@ -405,7 +405,7 @@ async def help_handler(bot, message):
                 [
                     InlineKeyboardButton(
                         "💌 sᴜʙsᴄʀɪʙᴇ 💌",
-                        url="https://youtube.com/opustechz"
+                        url="https://youtube.com/Latest_Movies_FreeOnnet"
                     )
                 ]
             ]
@@ -443,12 +443,12 @@ async def about_handler(bot, message):
 ┃
 ┣⪼ <b>ʙᴏᴛ ɴᴀᴍᴇ : <a href='https://github.com/Aadhi000/File-To-Link'>ғɪʟᴇ ᴛᴏ ʟɪɴᴋ</a></b>
 ┣⪼ <b>ᴜᴘᴅᴀᴛᴇᴢ : <a href='https://t.me/Latest_Movies_FreeOnNet'>ᴍᴡ ᴜᴘᴅᴀᴛᴇᴢ</a></b>
-┣⪼ <b>sᴜᴘᴘᴏʀᴛ : <a href='https://t.me/OpusTechz'>ᴏᴘᴜs ᴛᴇᴄʜᴢ</a></b>
+┣⪼ <b>sᴜᴘᴘᴏʀᴛ : <a href='https://t.me/mix_cinema_Box'>ᴏᴘᴜs ᴛᴇᴄʜᴢ</a></b>
 ┣⪼ <b>sᴇʀᴠᴇʀ : ʜᴇʀᴜᴋᴏ / ᴋᴏʏᴇʙ</b>
 ┣⪼ <b>ʟɪʙʀᴀʀʏ : ᴘʏʀᴏɢʀᴀᴍ</b>
 ┣⪼ <b>ʟᴀɴɢᴜᴀɢᴇ : ᴘʏᴛʜᴏɴ 3</b>
 ┣⪼ <b>sᴏᴜʀᴄᴇ-ᴄᴏᴅᴇ : <a href='https://github.com/Aadhi000/File-To-Link'>ғɪʟᴇ ᴛᴏ ʟɪɴᴋ</a></b>
-┣⪼ <b>ʏᴏᴜᴛᴜʙᴇ : <a href='https://youtube.com/opustechz'>ᴏᴘᴜs ᴛᴇᴄʜᴢ</a></b>
+┣⪼ <b>ʏᴏᴜᴛᴜʙᴇ : <a href='https://youtube.com/Latest_Movies_FreeOnNet'>Titanoboa</a></b>
 ┃
 <b>╰━━━━━━━〔ᴘʟᴇᴀsᴇ sᴜᴘᴘᴏʀᴛ〕</b>""",
 
@@ -467,7 +467,7 @@ async def about_handler(bot, message):
                 [
                     InlineKeyboardButton(
                         "💌 sᴜʙsᴄʀɪʙᴇ 💌",
-                        url="https://youtube.com/op"
+                        url="https://youtube.com/Latest_Movies_FreeOnnet"
                     )
                 ]
             ]
