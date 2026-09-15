@@ -207,7 +207,7 @@ async def start(bot, message):
                     [
                         InlineKeyboardButton(
                             "💌 sᴜʙsᴄʀɪʙᴇ 💌",
-                            url="https://youtube.com/Latest_Movies_FreeOnNet"
+                            url="https://youtube.com/@latest_movies_freeonnet"
                         )
                     ]
                 ]
@@ -318,7 +318,7 @@ async def start(bot, message):
         "💌 ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :- {}\n\n"
         "♻️ ᴛʜɪs ʟɪɴᴋ ɪs ᴘᴇʀᴍᴀɴᴇɴᴛ "
         "ᴀɴᴅ ᴡᴏɴ'ᴛ ɢᴇᴛ ᴇxᴘɪʀᴇᴅ ♻️\n\n"
-        "<b>❖ YouTube.com/Latest_Movies_FreeOnNet</b>**"
+        "<b>❖ YouTube.com/@latest_movies_freeonnet</b>**"
     )
 
     await message.reply_text(
@@ -405,7 +405,7 @@ async def help_handler(bot, message):
                 [
                     InlineKeyboardButton(
                         "💌 sᴜʙsᴄʀɪʙᴇ 💌",
-                        url="https://youtube.com/Latest_Movies_FreeOnnet"
+                        url="https://youtube.com/@latest_movies_freeonnet"
                     )
                 ]
             ]
@@ -448,7 +448,7 @@ async def about_handler(bot, message):
 ┣⪼ <b>ʟɪʙʀᴀʀʏ : ᴘʏʀᴏɢʀᴀᴍ</b>
 ┣⪼ <b>ʟᴀɴɢᴜᴀɢᴇ : ᴘʏᴛʜᴏɴ 3</b>
 ┣⪼ <b>sᴏᴜʀᴄᴇ-ᴄᴏᴅᴇ : <a href='https://github.com/Aadhi000/File-To-Link'>ғɪʟᴇ ᴛᴏ ʟɪɴᴋ</a></b>
-┣⪼ <b>ʏᴏᴜᴛᴜʙᴇ : <a href='https://youtube.com/Latest_Movies_FreeOnNet'>Titanoboa</a></b>
+┣⪼ <b>ʏᴏᴜᴛᴜʙᴇ : <a href='https://youtube.com/@latest_movies_freeonnet'>Titanoboa</a></b>
 ┃
 <b>╰━━━━━━━〔ᴘʟᴇᴀsᴇ sᴜᴘᴘᴏʀᴛ〕</b>""",
 
@@ -467,7 +467,7 @@ async def about_handler(bot, message):
                 [
                     InlineKeyboardButton(
                         "💌 sᴜʙsᴄʀɪʙᴇ 💌",
-                        url="https://youtube.com/Latest_Movies_FreeOnnet"
+                        url="https://youtube.com@latest_movies_freeonnet"
                     )
                 ]
             ]
